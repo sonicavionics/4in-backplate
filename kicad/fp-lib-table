@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "10018784_10210TLF")(type "KiCad")(uri "${KIPRJMOD}/library/pcie_x1_socket")(options "")(descr ""))
+)
