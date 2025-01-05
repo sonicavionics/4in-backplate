@@ -26,7 +26,7 @@
 **/*.sch-bak
 **/*-backups/
 **.kicad_sch-bak
-
+**/backups/
 
 # KiCad lock files
 **/*.lck
