@@ -82,8 +82,8 @@ jobs:
               --scene-bg-color 1 1 1
 
           # Step 5: Clean up
-          rm /workspace/images/board.front.wrl
-          rm /workspace/images/board.wrl
+          #rm /workspace/images/board.front.wrl
+          #rm /workspace/images/board.wrl
 
           echo "Script execution completed."
         "
