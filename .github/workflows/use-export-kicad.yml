@@ -1,0 +1,15 @@
+# .github/workflows/use-export-kicad.yml
+name: Use Export KiCad Images Workflow
+
+on:
+  push:
+    paths:
+      - '**/*.kicad_sch'
+      - '**/*.kicad_pcb'
+  workflow_dispatch:
+
+jobs:
+  use-reusable-workflow:
+    uses: sonicavionics/shared-workflows/.github/workflows/export-kicad-images.yml@main
+    with:
+      paths: ['**/*.kicad_sch', '**/*.kicad_pcb']
