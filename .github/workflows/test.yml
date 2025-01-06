@@ -26,77 +26,93 @@ jobs:
         echo "Pulling KiCad Docker image..."
         docker pull kicad/kicad:8.0
 
+    # Export schematic, PCB, and 3D model
     - name: Export schematic, PCB, and 3D model
       run: |
         echo "Exporting schematic, PCB, and 3D model..."
         docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace kicad/kicad:8.0 bash -c "
           set -e
-          # Export schematic
+          
           mkdir -p images
-          kicad-cli sch export svg -o 'images/sch' kicad/*.kicad_sch
-          mv images/sch/*.svg images/sch.svg
-          rm -r images/sch
+          
+          # Export schematic
+          echo 'Exporting schematic...'
+          kicad-cli sch export svg -o 'images/sch' kicad/*.kicad_sch || echo 'Schematic export failed!'
+          mv images/sch/*.svg images/sch.svg || echo 'Schematic SVG move failed!'
+          rm -r images/sch || echo 'Failed to remove temporary schematic directory.'
 
           # Export PCB
-          kicad-cli pcb export svg -o 'images/pcb.svg' --page-size-mode 2 --exclude-drawing-sheet --layers 'F.Cu,F.SilkS,F.Mask' kicad/*.kicad_pcb
+          echo 'Exporting PCB...'
+          kicad-cli pcb export svg -o 'images/pcb.svg' --page-size-mode 2 --exclude-drawing-sheet --layers 'F.Cu,F.SilkS,F.Mask' kicad/*.kicad_pcb || echo 'PCB export failed!'
 
-          # Export 3D model file
-          kicad-cli pcb export vrml --output "images/board.wrl" kicad/*.kicad_pcb
+          # Export 3D model
+          echo 'Exporting 3D model...'
+          kicad-cli pcb export vrml --output 'images/board.wrl' kicad/*.kicad_pcb || echo '3D model export failed!'
 
-          # Step 2: Install Rayhunter
-          echo "Installing Rayhunter..."
+          # Install Rayhunter
+          echo 'Installing Rayhunter...'
           mkdir -p ~/Downloads
           cd ~/Downloads
           sudo apt-get update
           sudo apt-get install -y wget libpng-dev
+          wget https://master.dl.sourceforge.net/project/castle-engine/rayhunter/rayhunter-1.3.4-linux-x86_64.tar.gz || echo 'Rayhunter download failed!'
+          tar xzvf rayhunter-1.3.4-linux-x86_64.tar.gz || echo 'Rayhunter extraction failed!'
+          sudo install -m 0755 ~/Downloads/rayhunter/rayhunter /usr/local/bin/rayhunter || echo 'Rayhunter installation failed!'
 
-          wget https://master.dl.sourceforge.net/project/castle-engine/rayhunter/rayhunter-1.3.4-linux-x86_64.tar.gz
-          tar xzvf rayhunter-1.3.4-linux-x86_64.tar.gz
-          sudo install -m 0755 ~/Downloads/rayhunter/rayhunter /usr/local/bin/rayhunter
-
-          # Step 3: Add lighting effects to VRML file
+          # Add lighting effects to VRML file
+          echo 'Modifying VRML file for lighting...'
           cd /workspace/images
-          head -1 "board.wrl" > "board.front.wrl"
-          cat <<EOF >> "board.front.wrl"
-          Transform {
-              children [
-                DirectionalLight {
-                    on TRUE
-                    intensity 0.63
-                    ambientIntensity 0.21
-                    color 1.0 1.0 1.0
-                    direction 0.1 -0.1 -1
-                }
-          EOF
-          cat "board.wrl" >> "board.front.wrl"
-          echo "] }" >> "board.front.wrl"
+          if [ -f 'board.wrl' ]; then
+            head -1 'board.wrl' > 'board.front.wrl'
+            cat <<EOF >> 'board.front.wrl'
+            Transform {
+                children [
+                  DirectionalLight {
+                      on TRUE
+                      intensity 0.63
+                      ambientIntensity 0.21
+                      color 1.0 1.0 1.0
+                      direction 0.1 -0.1 -1
+                  }
+            EOF
+            cat 'board.wrl' >> 'board.front.wrl'
+            echo '] }' >> 'board.front.wrl'
 
-          # Step 4: Convert to PNG using Rayhunter
-          echo "Converting /workspace/images/board.front.wrl to board.png..."
-          rayhunter classic 7 \
-              4320 4320 \
-              "/workspace/images/board.front.wrl" \
-              "/workspace/images/board.png" \
-              --camera-pos 0 0 6 \
-              --camera-dir 0 0 -1 \
-              --scene-bg-color 1 1 1
-
-          # Step 5: Clean up
-          #rm /workspace/images/board.front.wrl
-          #rm /workspace/images/board.wrl
-
-          echo "Script execution completed."
+            # Convert to PNG using Rayhunter
+            echo 'Converting to PNG with Rayhunter...'
+            rayhunter classic 7 \
+                4320 4320 \
+                'board.front.wrl' \
+                'board.png' \
+                --camera-pos 0 0 6 \
+                --camera-dir 0 0 -1 \
+                --scene-bg-color 1 1 1 || echo 'Rayhunter conversion failed!'
+          else
+            echo 'VRML file not found, skipping Rayhunter conversion.'
+          fi
         "
 
-      # Commit and push the changes
+    # Debug workspace contents
+    - name: Debug - List workspace contents
+      run: ls -R ${{ github.workspace }}
+
+    # Debug image directory contents
+    - name: Debug - List images directory contents
+      run: ls -R ${{ github.workspace }}/images
+
+    # Commit and push the changes
     - name: Commit and push changes
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git add images/*
-        git commit -m "Auto-exported schematic, PCB, and 3D model"
-        git push
+        if git status --porcelain | grep 'images/'; then
+          git add images/*
+          git commit -m "Auto-exported schematic, PCB, and 3D model"
+          git push
+        else
+          echo "No changes detected, skipping commit."
+        fi
 
     # Notify the user about completion
     - name: Notify completion
-      run: echo "3D model image exported successfully into the 'images' directory and changes pushed to the repository."
+      run: echo "3D model image export process completed."
