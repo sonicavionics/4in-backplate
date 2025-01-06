@@ -1,0 +1,44 @@
+name: Export KiCad Files
+
+on:
+  push:
+    paths:
+      - '**/*.kicad_sch'
+      - '**/*.kicad_pcb'
+
+jobs:
+  export-kicad-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Pull KiCad Docker image
+      - name: Pull KiCad Docker image
+        run: |
+          docker pull kicad/kicad:8.0
+
+      # Run KiCad Docker container to export files
+      - name: Export schematic, PCB, and 3D model
+        run: |
+          docker run --rm -v "${{ github.workspace }}:/workspace" kicad/kicad:8.0 bash -c "
+            cd /workspace
+
+            # Export schematic
+            mkdir -p images
+            cd images
+            kicad-cli sch export svg -o 'sch' ../*.kicad_sch
+
+            # Export PCB
+            kicad-cli pcb export svg -o 'pcb.svg' --page-size-mode 2 --exclude-drawing-sheet --layers 'F.Cu,F.SilkS,F.Mask' ../*.kicad_pcb
+
+            # Export 3D model
+            kicad-cli pcb export step --output board.step ../*.kicad_pcb
+            cd ..
+          "
+
+      # Inform the user about the completion
+      - name: Notify completion
+        run: echo "Schematic, PCB, and 3D model exported successfully into the 'images' directory."
