@@ -54,7 +54,7 @@ jobs:
           if [ -f 'board.wrl' ]; then
           head -1 'board.wrl' > 'board.front.wrl'
           cat <<EOF >> 'board.front.wrl'
-          Transform {
+        Transform {
               children [
                 DirectionalLight {
                     on TRUE
@@ -65,7 +65,7 @@ jobs:
                 }
               ]
           }
-          EOF
+        EOF
           cat 'board.wrl' >> 'board.front.wrl'
           echo '] }' >> 'board.front.wrl'
 
