@@ -14,6 +14,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Set permissions for the workspace directory
+      - name: Set workspace folder permissions
+        run: chmod -R 777 ${{ github.workspace }}
+
       # Pull KiCad Docker image
       - name: Pull KiCad Docker image
         run: |
@@ -24,9 +28,7 @@ jobs:
       - name: Export schematic, PCB, and 3D model
         run: |
           echo "Exporting schematic, PCB, and 3D model..."
-          docker run --rm -v "${{ github.workspace }}:/workspace" kicad/kicad:8.0 bash -c "
-            cd /workspace
-
+          docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace kicad/kicad:8.0 bash -c "
             # Export schematic
             mkdir -p images
             kicad-cli sch export svg -o 'images/sch.svg' kicad/*.kicad_sch
@@ -36,7 +38,6 @@ jobs:
 
             # Export 3D model
             kicad-cli pcb export step --output 'images/board.step' kicad/*.kicad_pcb
-            cd ..
           "
 
       # Commit and push the changes
@@ -45,7 +46,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add images/*
-          git commit -m "Auto-export schematic, PCB, and 3D model"
+          git commit -m "Auto-exported schematic, PCB, and 3D model"
           git push
 
       # Notify the user about completion
