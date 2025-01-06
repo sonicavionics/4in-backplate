@@ -69,14 +69,18 @@ jobs:
           cat 'board.wrl' >> 'board.front.wrl'
           echo '] }' >> 'board.front.wrl'
 
-          echo "Converting /workspace/images/board.front.wrl to board.png..."
+          # Convert to PNG using Rayhunter
+          echo 'Converting to PNG with Rayhunter...'
           rayhunter classic 7 \
               4320 4320 \
-              "/workspace/images/board.front.wrl" \
-              "/workspace/images/board.png" \
+              'board.front.wrl' \
+              'board.png' \
               --camera-pos 0 0 6 \
               --camera-dir 0 0 -1 \
-              --scene-bg-color 1 1 1
+              --scene-bg-color 1 1 1 || echo 'Rayhunter conversion failed!'
+          else
+            echo 'VRML file not found, skipping Rayhunter conversion.'
+          fi
         "
 
 
