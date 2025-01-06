@@ -39,6 +39,15 @@ jobs:
             cd ..
           "
 
+      # Commit and push the changes
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add images/*
+          git commit -m "Auto-export schematic, PCB, and 3D model"
+          git push
+
       # Notify the user about completion
       - name: Notify completion
-        run: echo "Schematic, PCB, and 3D model exported successfully into the 'images' directory."
+        run: echo "Schematic, PCB, and 3D model exported successfully into the 'images' directory and changes pushed to the repository."
