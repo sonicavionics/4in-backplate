@@ -12,7 +12,7 @@ jobs:
   export-kicad-files:
     runs-on: ubuntu-latest
 
-  steps:
+    steps:
     # Checkout the repository
     - name: Checkout repository
       uses: actions/checkout@v3
