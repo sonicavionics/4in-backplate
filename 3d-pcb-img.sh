@@ -3,9 +3,6 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
-# Remove the 'images' directory if it exists
-echo "Removing 'images' directory if it exists..."
-sudo rm -rf images
 
 # Pull KiCad Docker image
 echo "Pulling KiCad Docker image..."
@@ -54,14 +51,18 @@ EOF
   echo "] }" >> "board.front.wrl"
 
   # Step 4: Convert to PNG using Rayhunter
-  echo "Converting /workspace/images/board.front.wrl to board.front.png..."
+  echo "Converting /workspace/images/board.front.wrl to board.png..."
   rayhunter classic 7 \
       4320 4320 \
       "/workspace/images/board.front.wrl" \
-      "/workspace/images/board.front.png" \
+      "/workspace/images/board.png" \
       --camera-pos 0 0 6 \
       --camera-dir 0 0 -1 \
       --scene-bg-color 1 1 1
+
+  # Step 5: Clean up
+  rm /workspace/images/board.front.wrl
+  rm /workspace/images/board.wrl
 
   echo "Script execution completed."
 '

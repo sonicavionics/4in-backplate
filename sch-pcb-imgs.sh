@@ -21,10 +21,6 @@ docker run --rm -v "$(pwd):/workspace" kicad/kicad:8.0 bash -c "
 
   # Export PCB
   kicad-cli pcb export svg -o 'images/pcb.svg' --page-size-mode 2 --exclude-drawing-sheet --layers 'F.Cu,F.SilkS,F.Mask' kicad/*.kicad_pcb
-
-  # Export 3D model
-  kicad-cli pcb export step --output 'images/board.step' kicad/*.kicad_pcb
-  cd ..
 "
 
 # Notify the user about completion
