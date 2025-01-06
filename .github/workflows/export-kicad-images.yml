@@ -1,4 +1,4 @@
-name: Export 3D PCB Images
+name: Export KiCad Images
 
 on:
   push:
