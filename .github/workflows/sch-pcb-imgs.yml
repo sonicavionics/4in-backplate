@@ -54,6 +54,6 @@ jobs:
         git commit -m "Auto-exported schematic, PCB, and 3D model"
         git push
 
-      # Notify the user about completion
-      - name: Notify completion
-        run: echo "Schematic, PCB, and 3D model exported successfully into the 'images' directory and changes pushed to the repository."
+    # Notify the user about completion
+    - name: Notify completion
+      run: echo "Schematic, PCB, and 3D model exported successfully into the 'images' directory and changes pushed to the repository."
