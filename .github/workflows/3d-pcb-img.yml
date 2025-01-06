@@ -1,4 +1,4 @@
-name: Export PCB Images
+name: Export 3D PCB Images
 
 on:
   push:
