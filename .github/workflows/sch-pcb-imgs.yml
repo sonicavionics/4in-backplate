@@ -12,47 +12,47 @@ jobs:
   export-kicad-files:
     runs-on: ubuntu-latest
 
-    steps:
-      # Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  steps:
+    # Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      # Set permissions for the workspace directory
-      - name: Set workspace folder permissions
-        run: chmod -R 777 ${{ github.workspace }}
+    # Set permissions for the workspace directory
+    - name: Set workspace folder permissions
+      run: chmod -R 777 ${{ github.workspace }}
 
-      # Pull KiCad Docker image
-      - name: Pull KiCad Docker image
-        run: |
-          echo "Pulling KiCad Docker image..."
-          docker pull kicad/kicad:8.0
+    # Pull KiCad Docker image
+    - name: Pull KiCad Docker image
+      run: |
+        echo "Pulling KiCad Docker image..."
+        docker pull kicad/kicad:8.0
 
-      # Run KiCad Docker container to export files
-      - name: Export schematic, PCB, and 3D model
-        run: |
-          echo "Exporting schematic, PCB, and 3D model..."
-          docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace kicad/kicad:8.0 bash -c "
-            # Export schematic
-            mkdir -p images
-            kicad-cli sch export svg -o 'images/sch' kicad/*.kicad_sch
-            mv images/sch/*.svg images/sch.svg
-            rm -r images/sch
+    # Run KiCad Docker container to export files
+    - name: Export schematic, PCB, and 3D model
+      run: |
+        echo "Exporting schematic, PCB, and 3D model..."
+        docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace kicad/kicad:8.0 bash -c "
+          # Export schematic
+          mkdir -p images
+          kicad-cli sch export svg -o 'images/sch' kicad/*.kicad_sch
+          mv images/sch/*.svg images/sch.svg
+          rm -r images/sch
 
-            # Export PCB
-            kicad-cli pcb export svg -o 'images/pcb.svg' --page-size-mode 2 --exclude-drawing-sheet --layers 'F.Cu,F.SilkS,F.Mask' kicad/*.kicad_pcb
+          # Export PCB
+          kicad-cli pcb export svg -o 'images/pcb.svg' --page-size-mode 2 --exclude-drawing-sheet --layers 'F.Cu,F.SilkS,F.Mask' kicad/*.kicad_pcb
 
-            # Export 3D model
-            kicad-cli pcb export step --output 'images/board.step' kicad/*.kicad_pcb
-          "
+          # Export 3D model
+          kicad-cli pcb export step --output 'images/board.step' kicad/*.kicad_pcb
+        "
 
-      # Commit and push the changes
-      - name: Commit and push changes
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add images/*
-          git commit -m "Auto-exported schematic, PCB, and 3D model"
-          git push
+    # Commit and push the changes
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add images/*
+        git commit -m "Auto-exported schematic, PCB, and 3D model"
+        git push
 
       # Notify the user about completion
       - name: Notify completion
