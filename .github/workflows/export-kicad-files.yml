@@ -1,3 +1,10 @@
+on:
+  push:
+    paths:
+      - '**/*.kicad_sch'
+      - '**/*.kicad_pcb'
+  workflow_dispatch: # Allows manual triggering of the workflow
+
 jobs:
   export-kicad-files:
     runs-on: ubuntu-latest
