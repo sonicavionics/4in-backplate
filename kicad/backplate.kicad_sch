@@ -1488,6 +1488,16 @@
 		)
 		(uuid "fba40905-b20c-4636-a02b-6800f384988b")
 	)
+	(text "Backplate Schematic 0.1.0"
+		(exclude_from_sim no)
+		(at 223.774 173.99 0)
+		(effects
+			(font
+				(size 3.81 3.81)
+			)
+		)
+		(uuid "b87974e6-0154-4114-a461-5ab891c2be62")
+	)
 	(global_label "CANN"
 		(shape input)
 		(at 115.57 71.12 180)
