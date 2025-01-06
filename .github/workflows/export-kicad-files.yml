@@ -24,7 +24,7 @@ jobs:
       - name: Export schematic, PCB, and 3D model
         run: |
           docker run --rm -v "${{ github.workspace }}:/workspace" kicad/kicad:8.0 bash -c "
-            cd /workspace
+            cd /workspace/kicad
 
             # Export schematic
             mkdir -p images
