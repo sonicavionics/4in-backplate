@@ -2,11 +2,6 @@ name: Use Append Message Workflow
 
 on:
   workflow_dispatch:
-    inputs:
-      message:
-        description: "Message to append to README.md"
-        required: true
-        default: "cool"
 
 jobs:
   append-message:
