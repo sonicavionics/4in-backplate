@@ -22,11 +22,11 @@
 <table>
   <tr>
     <td align="center">
-      <img src="images/pcbf.png" alt="Front" width="300"><br>
+      <img src="images/pcbf.png" alt="Front" width="200"><br>
       <em>Front</em>
     </td>
     <td align="center">
-      <img src="images/pcbb.png" alt="Back" width="300"><br>
+      <img src="images/pcbb.png" alt="Back" width="200"><br>
       <em>Back</em>
     </td>
   </tr>
