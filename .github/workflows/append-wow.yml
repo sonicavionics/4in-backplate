@@ -2,6 +2,9 @@ name: Use Append Wow Workflow
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "test.py"
 
 jobs:
   append-wow:
