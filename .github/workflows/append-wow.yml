@@ -1,11 +1,8 @@
-name: Append Wow to README
+name: Use Append Wow Workflow
 
 on:
   workflow_dispatch:
 
 jobs:
   append-wow:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Append Wow to README
-        uses: sonicavionics/shared-workflows/.github/workflows/actiontest.yml@main
+    uses: sonicavionics/shared-workflows/.github/workflows/actiontest.yml@main
