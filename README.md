@@ -12,7 +12,8 @@ Footprint
 ![alt text](images/sch.svg)  
 Schematic
 
-![alt text](images/board.png)  
+
+<img src="images/board.png" alt="Alt Text" width="auto" height="500"><br>
 3D Render
 
 </div>
