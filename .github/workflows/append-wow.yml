@@ -5,6 +5,10 @@ on:
   push:
     paths:
       - "test.py"
+  repository_dispatch:
+    types:
+      - shared-workflow-updated
+  
 
 jobs:
   append-wow:
