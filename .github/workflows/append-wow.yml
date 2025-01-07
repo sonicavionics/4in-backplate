@@ -1,8 +1,15 @@
-name: Use Append Wow Workflow
+name: Use Append Message Workflow
 
 on:
   workflow_dispatch:
+    inputs:
+      message:
+        description: "Message to append to README.md"
+        required: true
+        default: "wow"
 
 jobs:
-  append-wow:
+  append-message:
     uses: sonicavionics/shared-workflows/.github/workflows/actiontest.yml@main
+    with:
+      message: ${{ inputs.message }}
