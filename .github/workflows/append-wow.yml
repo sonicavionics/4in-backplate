@@ -1,0 +1,11 @@
+name: Append Wow to README
+
+on:
+  workflow_dispatch:
+
+jobs:
+  append-wow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Append Wow to README
+        uses: ./.github/actions/append-wow
