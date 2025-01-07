@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Append Wow to README
-        uses: ./.github/actions/append-wow
+        uses: sonicavionics/shared-workflows/.github/workflows/actiontest.yml
