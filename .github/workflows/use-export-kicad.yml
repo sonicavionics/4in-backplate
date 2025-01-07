@@ -2,11 +2,12 @@
 name: Use Export KiCad Images Workflow
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - '**/*.kicad_sch'
       - '**/*.kicad_pcb'
-  workflow_dispatch:
+  
 
 
 jobs:
