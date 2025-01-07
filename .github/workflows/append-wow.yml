@@ -1,10 +1,8 @@
-name: Use Append Message Workflow
+name: Use Append Wow Workflow
 
 on:
   workflow_dispatch:
 
 jobs:
-  append-message:
+  append-wow:
     uses: sonicavionics/shared-workflows/.github/workflows/actiontest.yml@main
-    with:
-      message: ${{ inputs.message }}
