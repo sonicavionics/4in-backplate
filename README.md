@@ -1,5 +1,7 @@
 # 4in-backplate
 
+**Repo for the backplate module**
+
 <div align="center">
   
 [![Use Export KiCad Images Workflow](https://github.com/sonicavionics/4in-backplate/actions/workflows/use-export-kicad.yml/badge.svg)](https://github.com/sonicavionics/4in-backplate/actions/workflows/use-export-kicad.yml)
