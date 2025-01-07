@@ -8,4 +8,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Append Wow to README
-        uses: sonicavionics/shared-workflows/.github/workflows/actiontest.yml
+        uses: sonicavionics/shared-workflows/.github/workflows/actiontest.yml@main
