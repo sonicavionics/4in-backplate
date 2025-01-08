@@ -5,7 +5,6 @@
 ---
 
 <div align="center">
-
   <div>
     <img src="images/board.front.png" alt="3D Render" height="500">
     <img src="images/board.back.png" alt="3D Render" height="500">
@@ -24,3 +23,4 @@
     <img src="images/pcbb.png" alt="Back" height="500"><br>
     <em>Back</em>
   </div>
+</div>
