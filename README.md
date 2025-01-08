@@ -7,8 +7,8 @@
 <div align="center">
 
   <div>
-    <img src="images/board.png" alt="3D Render" height="500">
-    <img src="images/board.png" alt="3D Render" height="500">
+    <img src="images/board.front.png" alt="3D Render" height="500">
+    <img src="images/board.back.png" alt="3D Render" height="500">
     <p><em>3D Render</em></p>
   </div>
   <br>
