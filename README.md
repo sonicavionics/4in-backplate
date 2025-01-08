@@ -19,8 +19,8 @@
   <br>
   
   <div>
-    <img src="images/pcbf.png" alt="Front" height="500">
-    <img src="images/pcbb.png" alt="Back" height="500"><br>
+    <img src="images/pcbf.svg" alt="Front" height="500">
+    <img src="images/pcbb.svg" alt="Back" height="500"><br>
     <em>Back</em>
   </div>
 </div>
