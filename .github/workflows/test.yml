@@ -1,5 +1,5 @@
 # .github/workflows/use-export-kicad.yml
-name: Use Export KiCad Images Workflow
+name: test
 
 on:
   workflow_dispatch:
