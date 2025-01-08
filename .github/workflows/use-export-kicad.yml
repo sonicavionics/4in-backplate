@@ -2,13 +2,17 @@
 name: Use Export KiCad Images Workflow
 
 on:
-  workflow_dispatch:
   push:
+    branches:
+      - main
     paths:
       - '**/*.kicad_sch'
       - '**/*.kicad_pcb'
-  
+  workflow_dispatch:
 
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   call-workflow:
