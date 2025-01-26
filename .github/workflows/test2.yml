@@ -1,0 +1,35 @@
+name: test2
+
+on:
+  workflow_dispatch:
+
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Create GitHub App token
+        id: create_app_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.MY_APP_ID }}
+          private_key: ${{ secrets.MY_APP_PRIVATE_KEY }}
+          installation_id: ${{ secrets.MY_APP_INSTALLATION_ID }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "My KiCad Export App"
+          git config user.email "123456+MyKiCadApp[bot]@users.noreply.github.com"
+
+      - name: Commit and push changes using the App token
+        run: |
+          git add images/*
+          git commit -m "Auto-exported schematic, PCB, and 3D model" || echo "No changes to commit."
+          git push origin main
+        env:
+          # Use the token we just generated
+          GITHUB_TOKEN: ${{ steps.create_app_token.outputs.token }}
