@@ -1,5 +1,5 @@
 # .github/workflows/use-export-kicad.yml
-name: Call Test2 Reusable Workflow
+name: Call Test Reusable Workflow
 
 on:
   push:
@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   call-test2:
-    uses: sonicavionics/shared-workflows/.github/workflows/test2.yml@main
+    uses: sonicavionics/shared-workflows/.github/workflows/test.yml@main
     secrets:
       APP_ID: ${{ secrets.APP_ID }}
       APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
