@@ -6,31 +6,35 @@ on:
 
 
 jobs:
-  build:
+  job:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      
-      - name: Create GitHub App token
-        id: create_token
-        uses: tibdex/github-app-token@v2.1.0
+      - id: create_token
+        uses: tibdex/github-app-token@v2
         with:
           app_id: ${{ secrets.MY_APP_ID }}
-          private_key: ${{ secrets.MY_APP_PRIVATE_KEY }}
-          installation_id: ${{ secrets.MY_APP_INSTALLATION_ID }}
 
-      - name: Configure Git
-        run: |
-          git config user.name "Your GitHub App"
-          git config user.email "123456+YourApp[bot]@users.noreply.github.com"
+          # Optional.
+          # github_api_url: https://api.example.com
 
-      - name: Commit changes using the App token
-        run: |
-          git add images/*
-          git commit -m "Auto-export from GitHub App" || echo "No changes to commit."
-          git push origin main
-        env:
-          GITHUB_TOKEN: ${{ steps.create_app_token.outputs.token }}
+          # Optional.
+          # installation_retrieval_mode: id
 
+          # Optional.
+          # installation_retrieval_payload: 1337
+
+          # Optional.
+          # Using a YAML multiline string to avoid escaping the JSON quotes.
+          # permissions: >-
+          #   {"pull_requests": "read"}
+
+          private_key: ${{ secrets.MY_PRIVATE_KEY }}
+
+          # Optional.
+          # repositories: >-
+          #   ["actions/toolkit", "github/docs"]
+
+          # Optional.
+          # revoke: false
+
+      - run: "echo 'The created token is masked: ${{ steps.create_token.outputs.token }}'"
