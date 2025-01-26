@@ -16,4 +16,4 @@ concurrency:
 
 jobs:
   call-workflow:
-    uses: sonicavionics/shared-workflows/.github/workflows/test.yml@main
+    uses: sonicavionics/shared-workflows/.github/workflows/test2.yml@main
