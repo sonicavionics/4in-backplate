@@ -1,5 +1,5 @@
 # .github/workflows/use-export-kicad.yml
-name: Use Export KiCad Images Workflow
+name: Call Test2 Reusable Workflow
 
 on:
   push:
@@ -15,5 +15,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  call-workflow:
+  call-test2:
     uses: sonicavionics/shared-workflows/.github/workflows/export-kicad-images.yml@main
+    secrets:
+      APP_ID: ${{ secrets.APP_ID }}
+      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
