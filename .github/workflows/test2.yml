@@ -28,8 +28,6 @@ jobs:
           # permissions: >-
           #   {"pull_requests": "read"}
 
-          private_key: ${{ secrets.PRIVATE_KEY }}
-
           # Optional.
           # repositories: >-
           #   ["actions/toolkit", "github/docs"]
